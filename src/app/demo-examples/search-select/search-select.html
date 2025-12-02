@@ -1,0 +1,57 @@
+<div class="relative w-full">
+  <!-- Selected Chip -->
+  @if (value()) {
+    <div class="mb-2 flex flex-wrap gap-2">
+      <span class="px-2 py-1 bg-sky-100 text-sky-700 font-semibold rounded-sm text-xs">
+        {{ searchText() }}
+        <button class="ml-1 text-red-500" (click)="clearSelected()">✕</button>
+      </span>
+    </div>
+  }
+
+  <!-- Input -->
+  <div class="relative">
+    <input
+      type="text"
+      class="w-full border rounded px-3 py-2 pr-8 focus:ring-2 focus:ring-sky-500"
+      placeholder="ค้นหา..."
+      [value]="searchText()"
+      (focus)="toggleDropdown()"
+      (input)="searchText.set($any($event.target).value); isOpen.set(true)"
+    />
+
+    <!-- clear button -->
+    @if (searchText()) {
+      <button
+        class="absolute right-2 top-2 text-slate-500 hover:text-red-500"
+        (click)="clearSelected()"
+        tabindex="-1"
+      >
+        ✕
+      </button>
+    }
+  </div>
+
+  <!-- DROPDOWN -->
+  @if (isOpen()) {
+    <ul
+      class="absolute z-20 w-full bg-white border rounded shadow max-h-60 overflow-auto"
+      [class.bottom-full]="openUpward()"
+      [class.mb-2]="openUpward()"
+      [class.mt-1]="!openUpward()"
+    >
+      @for (item of filteredOptions(); track item[optionValue()]) {
+        <li
+          class="px-3 py-2 hover:bg-sky-100 cursor-pointer"
+          (click)="selectOption(item)"
+        >
+          {{ item[optionLabel()] }}
+        </li>
+      }
+
+      @if (!filteredOptions().length) {
+        <li class="px-3 py-2 text-slate-500">ไม่พบข้อมูล</li>
+      }
+    </ul>
+  }
+</div>
