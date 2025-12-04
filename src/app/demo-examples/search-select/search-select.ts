@@ -5,15 +5,9 @@ import {
   forwardRef,
   HostListener,
   input,
-  output,
   signal,
 } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-
-interface SelectOption {
-  id: number;
-  name: string;
-}
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
   selector: 'app-search-select',
@@ -59,7 +53,7 @@ export class SearchSelect {
   // -------------------------
   // ControlValueAccessor
   // -------------------------
-  onChange = (value: any) => {};
+  onChange = (_value: any) => {};
   onTouched = () => {};
 
   writeValue(val: any): void {
