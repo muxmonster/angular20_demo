@@ -1,0 +1,111 @@
+<div class="p-6">
+  <h2 class="text-xl font-bold mb-4">รายการงานทั้งหมด</h2>
+
+  <!-- Table -->
+  <div class="overflow-x-auto">
+    <table class="min-w-full border border-slate-300">
+      <thead class="bg-slate-100">
+        <tr>
+          <th class="border px-3 py-2 text-left">#</th>
+          <th class="border px-3 py-2 text-left">ชื่อแบบฟอร์ม</th>
+          <th class="border px-3 py-2 text-left">ลำดับงาน</th>
+          <th class="border px-3 py-2 text-left">สถานะ</th>
+          <th class="border px-3 py-2 text-center w-32">Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        @for (item of items(); track item.id) {
+          <tr class="hover:bg-slate-50">
+            <td class="border px-3 py-2">{{ item.id }}</td>
+            <td class="border px-3 py-2">{{ item.formName }}</td>
+            <td class="border px-3 py-2">{{ item.step }}</td>
+
+            <!-- Badge สี -->
+            <td class="border px-3 py-2">
+              <span
+                class="px-2 py-1 rounded text-xs border"
+                [ngClass]="getStatusColor(item.status)"
+              >
+                {{ item.status }}
+              </span>
+            </td>
+
+            <td class="border px-3 py-2 text-center">
+              <button
+                (click)="openModal(item)"
+                class="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                แสดงรายละเอียด
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ======================= MODAL ======================= -->
+
+@if (showModal()) {
+  <div
+    class="fixed inset-0 bg-black/40 flex items-center justify-center z-50 transition-opacity duration-150"
+    (click)="closeModal()"
+    [class.opacity-100]="animateModal()"
+    [class.opacity-0]="!animateModal()"
+  >
+    <div
+      class="bg-white rounded-lg shadow-lg w-full max-w-3xl p-6 scale-95 transition-all duration-150"
+      (click)="$event.stopPropagation()"
+      [class.scale-100]="animateModal()"
+      [class.scale-95]="!animateModal()"
+    >
+      <h3 class="text-lg font-bold mb-4">รายละเอียดงาน</h3>
+
+      @if (selectedItem()) {
+        <div class="overflow-x-auto">
+          <table class="w-full border border-slate-300 mb-4">
+            <tbody>
+              <tr>
+                <td class="border px-3 py-2 w-40 font-semibold">ID</td>
+                <td class="border px-3 py-2">{{ selectedItem()?.id }}</td>
+              </tr>
+
+              <tr>
+                <td class="border px-3 py-2 font-semibold">ชื่อแบบฟอร์ม</td>
+                <td class="border px-3 py-2">{{ selectedItem()?.formName }}</td>
+              </tr>
+
+              <tr>
+                <td class="border px-3 py-2 font-semibold">ลำดับงาน</td>
+                <td class="border px-3 py-2">{{ selectedItem()?.step }}</td>
+              </tr>
+
+              <tr>
+                <td class="border px-3 py-2 font-semibold">สถานะ</td>
+                <td class="border px-3 py-2">
+                  <span
+                    class="px-2 py-1 rounded text-xs border"
+                    [ngClass]="getStatusColor(selectedItem()?.status!)"
+                  >
+                    {{ selectedItem()?.status }}
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      }
+
+      <div class="text-right">
+        <button
+          class="px-4 py-1 bg-slate-500 text-white rounded hover:bg-slate-600"
+          (click)="closeModal()"
+        >
+          ปิด
+        </button>
+      </div>
+    </div>
+  </div>
+}

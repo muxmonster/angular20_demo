@@ -1,6 +1,6 @@
 import { FormsModule } from '@angular/forms';
-import { LoadImage } from '../services/load-image.service';
-import { Component, inject, signal } from '@angular/core';
+import { LoadImage, ImageData } from '../services/load-image.service';
+import { afterNextRender, Component, inject, signal } from '@angular/core';
 
 @Component({
   selector: 'app-load-image-example',
@@ -9,20 +9,20 @@ import { Component, inject, signal } from '@angular/core';
   styleUrl: './load-image-example.scss',
 })
 export class LoadImageExample {
-  readonly imageService = inject(LoadImage);
+  private imageService = inject(LoadImage);
   imageId = 1;
-  imageBase64 = signal<string | null>(null);
+  imageBase64 = signal<ImageData[] | null>(null);
   loading = signal(false);
 
-  loadImage() {
-    this.loading.set(true);
-    this.imageService.getImage().subscribe((data) => {
-      console.log('Image data received:', data);
-     
-      // setTimeout(() => {
-      //   this.imageBase64.set(`data:${data.mime};base64,${data.base64}`);
-      //   this.loading.set(false);
-      // }, 1000);
+  constructor() {
+    afterNextRender(() => {
+      this.imageService.getImage().subscribe((data: any) => {
+        this.imageBase64.set(data);
+      });
     });
+  }
+
+  loadImage(img: ImageData) {
+    return `data:${img.mime};base64,${img.base64}`;
   }
 }

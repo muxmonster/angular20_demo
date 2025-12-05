@@ -1,14 +1,19 @@
 <h1 class="text-3xl">Load Image Example</h1>
 
 <div class="flex gap-2 mb-4">
-  <input type="number" [(ngModel)]="imageId" placeholder="กรอก ID" 
-         class="border rounded px-2 py-1" />
-  <button class="bg-blue-600 text-white px-3 py-1 rounded" (click)="loadImage()">Load</button>
+  <input
+    type="number"
+    [(ngModel)]="imageId"
+    placeholder="กรอก ID"
+    class="border rounded px-2 py-1"
+  />
 </div>
-@if(loading()){
-    <div class="w-64 h-64 rounded bg-gray-200 animate-pulse"></div>
-} @else if (!loading() && imageBase64()){
-    
-
-    <img [src]="imageBase64()" alt="Loaded Image" class="w-64 h-64 object-cover rounded" />
+@for(item of imageBase64(); track item.id){
+<div class="p-3 border border-slate-300 my-4 shadow-lg shadow-emerald-400/100 rounded-lg bg-emerald-50">
+  <img
+    [src]="loadImage(item)"
+    [alt]="'Image ' + item.id"
+    class="w-64 h-64 object-cover rounded-lg mb-4"
+  />
+</div>
 }

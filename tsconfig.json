@@ -29,5 +29,6 @@
     {
       "path": "./tsconfig.spec.json"
     }
-  ]
+  ],
+  "include": ["./node_modules/@types","src/typ"]
 }

@@ -1,0 +1,35 @@
+<div class="p-4 space-y-4 max-w-4xl">
+  <input
+    type="file"
+    accept=".xlsx"
+    (change)="onFileSelected($event)"
+    class="border p-2 rounded-md"
+  />
+
+  @if (rows().length > 0) {
+  <table class="w-full border text-sm">
+    <thead class="bg-slate-100">
+      <tr>
+        @for (c of columns(); track c) {
+        <th class="border p-2 text-left">{{ c }}</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (r of rows(); track $index) {
+      <tr class="even:bg-slate-50">
+        @for (c of r; track $index) {
+        <td class="border p-2">{{ c }}</td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+
+  <div
+    class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-300 p-1 flex justify-center shadow-[0_-2px_10px_rgba(0,0,0,0.1)] z-50"
+  >
+    <button class="mt-4 px-4 py-1 bg-blue-600 text-white" (click)="saveToDB()">บันทึกลงฐานข้อมูล</button>
+  </div>
+  }
+</div>
