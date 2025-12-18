@@ -2,6 +2,13 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
     {
+        path: 'form-basic',
+        loadComponent: () =>
+            import('./demo-examples/form/form-basic').then(
+                (m) => m.FormBasic
+            ),
+    },
+    {
         path: 'load-image',
         loadComponent: () =>
             import('./demo-examples/load-image-example/load-image-example').then(
@@ -28,5 +35,6 @@ export const routes: Routes = [
             import('./demo-examples/report-pdf01/report-pdf01').then(
                 (m) => m.ReportPdf01
             ),
-    }
+    },
+  
 ];
