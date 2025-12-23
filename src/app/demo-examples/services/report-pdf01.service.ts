@@ -220,6 +220,7 @@ export class ReportPdf01Service {
             },
           ],
         },
+        summary: {},
         footer: (currentPage: number, pageCount: number) => {
           return {
             margin: [40, 0, 40, 20],
@@ -304,7 +305,7 @@ export class ReportPdf01Service {
 
           {
             text: 'ลงชื่อผู้จัดทำรายงาน',
-            margin: [0, 20, 0, 4],
+            margin: [0, 80, 0, 4],
           },
           {
             columns: [

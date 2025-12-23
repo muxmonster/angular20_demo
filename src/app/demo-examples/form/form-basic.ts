@@ -1,5 +1,6 @@
+import { JsonPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
-import { form, required, Field, submit } from '@angular/forms/signals';
+import { form, required, Field, submit, email } from '@angular/forms/signals';
 
 // #1 create ineterface
 interface OptOutRequest {
@@ -11,7 +12,7 @@ interface OptOutRequest {
 
 @Component({
   selector: 'app-form-basic',
-  imports: [Field],
+  imports: [Field, JsonPipe],
   templateUrl: './form-basic.html',
   styleUrl: './form-basic.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -25,7 +26,8 @@ export class FormBasic {
   });
 
   f = form(this.request, (schemaPath) => {
-   // required(schemaPath.email, { message: 'Email is required' });
+   required(schemaPath.email, { message: 'Email is required' });
+   email(schemaPath.email, { message: 'Email is invalid' });
   });
 
   onSubmit(event: Event) {

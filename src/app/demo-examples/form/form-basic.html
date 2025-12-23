@@ -1,5 +1,41 @@
 <h1 class="text-2xl">การใช้งาน Signals สำหรับ Form พื้นฐาน</h1>
 <form (submit)="onSubmit($event)">
-  <input type="text" [field]="f.name" placeholder="Name" />
-  <button type="submit">Submit</button>
+  <div class="flex flex-col gap-4 w-75 mx-auto my-4 p-4 border border-slate-300 rounded">
+    <label for="name"
+      >Name:
+      <input
+        type="text"
+        class="p-1 border border-slate-300 rounded"
+        [field]="f.name"
+        placeholder="Name"
+        #nameInput
+      />
+    </label>
+    <div>
+      <label for="email"
+        >Email:
+        <input
+          type="email"
+          id="email"
+          class="p-1 border border-slate-300 rounded"
+          [field]="f.email"
+          placeholder="Email"
+        />
+      </label>
+      @if (f.email().touched() && f.email().invalid()) {
+      <ul class="text-red-600 list-disc list-inside">
+        @for ( error of f.email().errors(); track error ) {
+        <li>{{ error.message }}</li>
+        }
+      </ul>
+      }
+    </div>
+    <button
+      class="mx-auto border-slate-300 border py-1 px-2 bg-blue-200 rounded hover:bg-blue-300 hover:cursor-pointer w-50"
+      type="submit"
+    >
+      Submit
+    </button>
+    <div>Form Value: {{ nameInput.value | json }}</div>
+  </div>
 </form>
