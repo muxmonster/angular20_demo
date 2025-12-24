@@ -14,8 +14,6 @@ export class ReportPdf01 {
 
   pdfUrl = signal<SafeResourceUrl | null>(null);
   loading = signal<boolean>(false);
-
-  
   
   private mockItems: ReportItem[] = [
     { no: 1, name: 'ถุงมือผ่าตัด ขนาด 7.0', quantity: 10, price: 25 },
